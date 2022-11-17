@@ -1,0 +1,23 @@
+{
+    "require": {
+        "yiisoft/yii2": "^2.0",
+        "yiisoft/yii2-apidoc": "^3.0",
+        "luyadev/luya-core": "^2.2",
+        "luyadev/luya-module-admin": "^4.7",
+        "luyadev/luya-module-cms": "^4.5",
+        "luyadev/luya-testsuite": "^3.1",
+        "luyadev/yii-helpers": "^1.4"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "luyadev/luya-composer": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}
