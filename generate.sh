@@ -13,7 +13,4 @@ YII=vendor/yiisoft/yii2
 HELPERS=vendor/luyadev/yii-helpers/src
 OUTPUT=dist
 
-./vendor/bin/apidoc api $LUYA,$ADMIN,$CMS,$YII,$SUITE,$HELPERS $OUTPUT --interactive=0 --exclude="./vendor/yiisoft" --page-title="LUYA"
-
-rm -rf dist/index.html
-cp dist/luya-boot.html dist/index.html
+./vendor/bin/apidoc api $LUYA,$ADMIN,$CMS,$YII,$SUITE,$HELPERS $OUTPUT --interactive=0 --exclude="./vendor/yiisoft" --page-title="api.luya.io"

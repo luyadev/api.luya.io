@@ -59,22 +59,11 @@ class ApiRenderer extends \yii\apidoc\templates\html\ApiRenderer
             file_put_contents($targetDir . "/ext-{$ext}-index.html", $indexFileContent);
         }
 
-        $yiiTypes = $this->filterTypes($types, 'yii');
-        if (empty($yiiTypes)) {
-            //$readme = @file_get_contents("https://raw.github.com/yiisoft/yii2-framework/master/README.md");
-            $indexFileContent = $this->renderWithLayout($this->indexView, [
-                'docContext' => $context,
-                'types' => $this->filterTypes($types, 'app'),
-                'readme' => null,
-            ]);
-        } else {
-            $readme = @file_get_contents("https://raw.github.com/yiisoft/yii2-framework/master/README.md");
-            $indexFileContent = $this->renderWithLayout($this->indexView, [
-                'docContext' => $context,
-                'types' => $yiiTypes,
-                'readme' => $readme ?: null,
-            ]);
-        }
+        $indexFileContent = $this->renderWithLayout($this->indexView, [
+            'docContext' => $context,
+            'types' => $this->filterTypes($types, 'app'),
+            'readme' => null,
+        ]);
         file_put_contents($targetDir . '/index.html', $indexFileContent);
 
         if ($this->controller !== null) {
@@ -110,13 +99,33 @@ class ApiRenderer extends \yii\apidoc\templates\html\ApiRenderer
                     $url = "$baseUrl/framework/" . str_replace('\\', '/', substr($type->name, 4)) . '.php';
                 }
                 break;
-            case 'app':
-                return null;
             default:
                 $parts = explode('\\', substr($type->name, 4));
-                $ext = $parts[0];
-                unset($parts[0]);
-                $url = "https://github.com/yiisoft/yii2-$ext/blob/master/" . implode('/', $parts) . '.php';
+                $project = $parts[1];
+                switch ($project) {
+                    case "admin": 
+                        $repoName = "luya-module-admin";
+                        unset($parts[0], $parts[1]);
+                        break;
+                    case "cms": 
+                        $repoName = "luya-module-cms";
+                        unset($parts[0], $parts[1]);
+                        break;
+                    case "testsuite": 
+                        $repoName = "luya-testsuite";
+                        unset($parts[0], $parts[1]);
+                        break;
+                    case "yii": 
+                        $repoName = "yii-helpers";
+                        unset($parts[0], $parts[1]);
+                        break;
+                    default:
+                        $repoName = "luya";
+                        unset($parts[0]);
+                        break;
+                }
+                $rootFolder = $repoName == 'luya' ? 'core' : 'src';
+                $url = "https://github.com/luyadev/{$repoName}/blob/master/{$rootFolder}/" . implode('/', $parts) . '.php';
                 break;
         }
 
