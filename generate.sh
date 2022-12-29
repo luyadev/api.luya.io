@@ -2,6 +2,9 @@
 
 rm -rf dist/
 
+## copy the custom ApiRendered into the vendor
+cp ApiRenderer.php vendor/yiisoft/yii2-apidoc/templates/bootstrap/ApiRenderer.php
+
 LUYA=vendor/luyadev/luya-core
 ADMIN=vendor/luyadev/luya-module-admin/src
 CMS=vendor/luyadev/luya-module-cms/src
